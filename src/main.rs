@@ -3,9 +3,8 @@
 
 //TODO:
 //Implement Butterfly Structure
-//Implement Twiddle Factor Calculation
 
-//use std::f64::consts::PI;
+use std::f64::consts::PI;
 use num::complex::Complex;
 
 fn bit_reverse(input: &mut [Complex<f64>]){
@@ -29,6 +28,11 @@ fn reverse_bit_order(mut x: usize, bits: usize) -> usize{
     result
 }
 
+fn precompute_twiddle(n:usize, invert:bool) -> Vec<Complex<f64>>{
+    let sign: f64 = if invert {1.0} else {-1.0};
+    (0..n/2).map(|k| Complex::from_polar(1.0, sign * 2.0 * PI * k as f64 / n as f64)).collect()
+}
+
 fn main() {
     let mut data = vec![
         Complex::new(0.0, 0.0),
@@ -41,10 +45,19 @@ fn main() {
         Complex::new(7.0, 0.0),
     ];
 
+    let n: usize = data.len();
+    let twiddles: Vec<Complex<f64>> = precompute_twiddle(n, false);
+
+
     println!("Bit Reversed Input:");
     bit_reverse(&mut data);
 
     for (i, val) in data.iter().enumerate(){
+        println!("Index {}: {}",i,val);
+    }
+
+    println!("\nTwiddle Factors");
+    for (i, val) in twiddles.iter().enumerate(){
         println!("Index {}: {}",i,val);
     }
 
