@@ -8,6 +8,6 @@ Rufft is a high-performance Fast Fourier Transform (FFT) library written in Rust
 - **High Performance**: Designed with Rust's safety and speed in mind.
 
 ## Todo
-[x]Implement Bit Reversal
-[]Implement Butterfly Structure
-[]Implement Twiddle Factor Calculation
+- [x] Implement Bit Reversal
+- [] Implement Butterfly Structure
+- [] Implement Twiddle Factor Calculation
