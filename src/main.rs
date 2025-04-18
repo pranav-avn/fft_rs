@@ -33,32 +33,54 @@ fn precompute_twiddle(n:usize, invert:bool) -> Vec<Complex<f64>>{
     (0..n/2).map(|k| Complex::from_polar(1.0, sign * 2.0 * PI * k as f64 / n as f64)).collect()
 }
 
+pub fn fft(mut data: &mut [Complex<f64>], invert:bool, twiddles: &[Complex<f64>]) {
+    let n = data.len();
+    assert!(n.is_power_of_two(), "Length must be a power of two");
+
+    bit_reverse(&mut data);
+
+    let mut len = 2;
+    while len <= n{
+        let step = n/len;
+
+        for base in (0..n).step_by(len){
+            for offset in 0..len/2{
+                let a = data[base + offset];
+                let b = data[base + offset + len/2] * twiddles[offset * step];
+                data[base + offset] = a+b;
+                data[base + offset + len/2] = a - b;
+            }
+        }
+        len <<= 1;
+    }
+
+    if invert{
+        let scale = 1.0/n as f64;
+        for x in data.iter_mut(){
+            *x *= scale;
+        }
+    }
+}
+
 fn main() {
     let mut data = vec![
-        Complex::new(0.0, 0.0),
         Complex::new(1.0, 0.0),
-        Complex::new(2.0, 0.0),
-        Complex::new(3.0, 0.0),
-        Complex::new(4.0, 0.0),
-        Complex::new(5.0, 0.0),
-        Complex::new(6.0, 0.0),
-        Complex::new(7.0, 0.0),
+        Complex::new(1.0, 0.0),
+        Complex::new(1.0, 0.0),
+        Complex::new(1.0, 0.0),
+        Complex::new(1.0, 0.0),
+        Complex::new(0.0, 0.0),
+        Complex::new(0.0, 0.0),
+        Complex::new(0.0, 0.0),
     ];
 
     let n: usize = data.len();
     let twiddles: Vec<Complex<f64>> = precompute_twiddle(n, false);
+    fft(&mut data, false, &twiddles);
 
-
-    println!("Bit Reversed Input:");
-    bit_reverse(&mut data);
-
-    for (i, val) in data.iter().enumerate(){
-        println!("Index {}: {}",i,val);
-    }
-
-    println!("\nTwiddle Factors");
-    for (i, val) in twiddles.iter().enumerate(){
-        println!("Index {}: {}",i,val);
+    println!("FFT result:");
+    for (i, x) in data.iter().enumerate() {
+        println!("  [{}] = {}", i, x);
     }
 
 }
