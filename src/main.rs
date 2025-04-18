@@ -1,8 +1,6 @@
 //Rufft : A Radix-2 Fast Fourier Transform Implementation in Rust
 //by pranav-avn
 
-//TODO:
-//Implement Butterfly Structure
 
 use std::f64::consts::PI;
 use num::complex::Complex;
@@ -80,7 +78,15 @@ fn main() {
 
     println!("FFT result:");
     for (i, x) in data.iter().enumerate() {
-        println!("  [{}] = {}", i, x);
+        println!("  [{}] = {:.3}", i, x);
+    }
+
+    let twiddles: Vec<Complex<f64>> = precompute_twiddle(n, true);
+    fft(&mut data, true, &twiddles);
+
+    println!("Inverse FFT result:");
+    for (i, x) in data.iter().enumerate() {
+        println!("  [{}] = {:.3}", i, x);
     }
 
 }
