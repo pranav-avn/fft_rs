@@ -1,8 +1,8 @@
-//Rufft : A Radix-2 Fast Fourier Transform Implementation in Rust
+//fft_rs : A Radix-2 Fast Fourier Transform Implementation in Rust
 //by pranav-avn
 
 use num::complex::Complex;
-use rufft::fft;
+use fft_rs::fft;
 
 fn main() {
     let mut data = vec![

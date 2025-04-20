@@ -1,4 +1,4 @@
-/// Rufft: A Radix-2 Fast Fourier Transform Implementation in Rust
+/// fft_rs: A Radix-2 Fast Fourier Transform Implementation in Rust
 ///
 /// This library provides an implementation of the Radix-2 FFT algorithm. 
 /// It operates on a mutable reference to a vector of `Complex<f64>` values, 
@@ -18,7 +18,7 @@
 /// # Example:
 /// ```rust
 /// use num::complex::Complex;
-/// use rufft::fft;
+/// use fft_rs::fft;
 ///
 /// let mut data = vec![
 ///     Complex::new(0.0, 0.0),

@@ -1,6 +1,6 @@
-# Rufft
+# fft_rs
 
-Rufft is a high-performance Fast Fourier Transform (FFT) library written in Rust. It leverages the Radix-2 FFT algorithm for efficient computation of discrete Fourier transforms.
+fft_rs is a high-performance Fast Fourier Transform (FFT) library written in Rust. It leverages the Radix-2 FFT algorithm for efficient computation of discrete Fourier transforms.
 
 ## Features
 
